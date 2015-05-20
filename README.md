@@ -6,4 +6,4 @@ http://w3shaman.com/article/jquery-fetchrow
 
 # Demo
 The live example can be tried from here:
-stuff.w3shaman.com/jquery-plugins/fetchrow
+http://stuff.w3shaman.com/jquery-plugins/fetchrow
