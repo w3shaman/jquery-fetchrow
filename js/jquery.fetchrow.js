@@ -2,84 +2,99 @@
  * jQuery Plugin for fetching row from database
  * @requires jQuery 1.4 or later
  *
- * Copyright (c) 2011 Lucky
+ * Copyright (c) 2015 Lucky
  * Licensed under the GPL license:
  *   http://www.gnu.org/licenses/gpl.html
  */
 
 (function($) {
-	function fetchrow(callBackUrl, textField){
-		this.textField = textField;
-		this.callBackUrl = callBackUrl;
-		this.onPopulated = null;
-		this.onNullPopulated = null;
-		
-		this.textField.attr("autocomplete", "off");
-		
+	function fetchrow(settings, element){
 		var me=this;
-		this.textField.keyup(
-			function(e){
-				if(e.keyCode == 13){
-					$.ajax({
-						url : me.callBackUrl + $(this).val(),
-						success : function(result){
-							try{
-								data = $.parseJSON(result);
-								if(me.onPopulated != null){
-									if(data == null){
-										if(me.onNullPopulated != null){
-											me.onNullPopulated.call(this, me.textField);
-										}
-									}
-									else{
-										me.onPopulated.call(this, data, me.textField);
-									}
+
+		this.preventEnter=function(){
+			element.keypress(
+        function(e){
+          if(e.keyCode==13){
+            return false;
+          }
+
+          return true;
+        }
+      );
+		}
+
+		this.doRequest = function() {
+			$.ajax({
+				url : settings.url + element.val(),
+				success : function(result){
+					try{
+						data = $.parseJSON(result);
+						if(typeof settings.onPopulated === "function"){
+							if(data == null){
+								if(typeof settings.onNullPopulated === "function"){
+									settings.onNullPopulated.call(this, element);
 								}
 							}
-							catch(e){
-								alert('Sorry, an error has occured!');
+							else{
+								settings.onPopulated.call(this, data, element);
 							}
-						},
-						error : function(xhr, status, ex){
-							alert('Sorry, an error has occured!');
 						}
-					});
-				}
-			}
-		);
-		
-		this.preventEnter=function(){
-			this.textField.keypress(
-				function(e){
-					if(e.keyCode==13){
-						return false;
 					}
-					
-					return true;
+					catch(e){
+						alert('Sorry, an error has occured!');
+					}
+				},
+				error : function(xhr, status, ex){
+					alert('Sorry, an error has occured!');
 				}
-			);
+			});
 		}
+
+		var arr = settings.trigger.split("|");
+		switch(arr[0]) {
+			case "keypress" :
+				element.keyup(
+					function(e){
+						if(e.keyCode == arr[1]){
+							me.doRequest();
+						}
+					}
+				);
+
+				element.attr("autocomplete", "off");
+
+				this.preventEnter();
+
+				break;
+			case "blur":
+				element.blur(
+					function(e){
+						me.doRequest();
+					}
+				);
+
+				break;
+			case "change":
+				element.change(
+					function(e){
+						me.doRequest();
+					}
+				);
+
+				break;
+    }
 	}
-	
+
 	$.fn.fetchrow = function(options) {
 		var settings = {
 			onPopulated : null,
-			onNullPopulated : null
+			onNullPopulated : null,
+			trigger: 'keypress|13' // Supported events are: keypress|<keycode>, change, blur
 		};
 		$.extend(settings, options);
-		
+
 		return this.each(function() {
-			var obj = new fetchrow(settings.url, $(this));
-			
-			if($.isFunction(settings.onPopulated) == true){
-				obj.onPopulated=settings.onPopulated;
-			}
-			
-			if($.isFunction(settings.onNullPopulated) == true){
-				obj.onNullPopulated=settings.onNullPopulated;
-			}
-			
-			obj.preventEnter();
+			var obj = new fetchrow(settings, $(this));
 		});
 	}
 })(jQuery);
