@@ -93,6 +93,33 @@
     });
     </script>
   </form>
+  <br/>
+  <form action="" method="post">
+    <p>Fetch row when <b>On button click</b>.</p>
+    <table>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="item_id4" id="item_id4" /> <input type="button" value="Search" id="button4" /></td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="item_name4" id="item_name4" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="item_qty4" id="item_qty4" /></td></tr>
+    </table>
+    <br/>
+    <input type="submit" name="submit4" id="submit4" />
+    <script language="javascript" type="text/javascript">
+    // Use the button ID instead of the textfield ID.
+    $("#button4").fetchrow({
+      url : "data.php?id=",
+      trigger : "click",
+      onPopulated : function(data, textfield){
+        $("#item_name4").val(data.name);
+        $("#item_qty4").val(data.qty);
+      },
+      onNullPopulated : function(textfield){
+        $("#item_name4").val("");
+        $("#item_qty4").val("");
+      },
+      keyfield : $("#item_id4") // Pass the textfield as key field.
+    });
+    </script>
+  </form>
   <p>&nbsp;</p>
 </body>
 </html>

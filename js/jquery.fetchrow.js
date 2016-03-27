@@ -10,6 +10,7 @@
 (function($) {
   function fetchrow(settings, element){
     var me=this;
+    var keyfield = settings.keyfield;
 
     this.preventEnter=function(){
       element.keypress(
@@ -25,7 +26,7 @@
 
     this.doRequest = function() {
       $.ajax({
-        url : settings.url + element.val(),
+        url : settings.url + keyfield.val(),
         success : function(result){
           try{
             data = $.parseJSON(result);
@@ -82,6 +83,14 @@
         );
 
         break;
+      case "click":
+        element.click(
+          function(e){
+            me.doRequest();
+          }
+        );
+
+        break;
     }
   }
 
@@ -89,7 +98,9 @@
     var settings = {
       onPopulated : null,
       onNullPopulated : null,
-      trigger: 'keypress|13' // Supported events are: keypress|<keycode>, change, blur
+      trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
+                               // Click event require you to specify the keyfield element.
+      keyfield : $(this)
     };
     $.extend(settings, options);
 
