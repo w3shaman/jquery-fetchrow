@@ -2,7 +2,7 @@
  * jQuery Plugin for fetching row from database
  * @requires jQuery 1.4 or later
  *
- * Copyright (c) 2015 Lucky
+ * Copyright (c) 2016 Lucky
  * Licensed under the GPL license:
  *   http://www.gnu.org/licenses/gpl.html
  */
