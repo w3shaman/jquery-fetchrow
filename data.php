@@ -7,17 +7,15 @@ $username = "root";
 $password = "123xyz";
 $database = "lab";
 
-$con = mysql_connect($host,$username,$password) or die(mysql_error());
-mysql_select_db($database,$con) or die(mysql_error());
+$con = mysqli_connect($host,$username,$password,$database);
 
 $data = null;
-$result = mysql_query("SELECT id, name, qty FROM item WHERE id = ".intval($_GET['id']),$con);
-if(mysql_num_rows($result) > 0){
-    $data = mysql_fetch_assoc($result);
+$result = mysqli_query($con, "SELECT id, name, qty FROM item WHERE id = ".intval($_GET['id']));
+if(mysqli_num_rows($result) > 0){
+    $data = mysqli_fetch_assoc($result);
 }
 
-mysql_close($con);
+mysqli_close($con);
 
 // Encode it with JSON format
 echo json_encode($data);
-?>
