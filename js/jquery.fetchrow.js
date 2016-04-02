@@ -1,6 +1,6 @@
 /**
  * jQuery Plugin for fetching row from database
- * @version 1.1
+ * @version 1.2
  * @requires jQuery 1.4 or later
  *
  * Copyright (c) 2016 Lucky
@@ -30,7 +30,13 @@
         url : settings.url + keyfield.val(),
         success : function(result){
           try{
-            data = $.parseJSON(result);
+            var data = null;
+
+            if (typeof result == 'string')
+              data = $.parseJSON(result);
+            else if (typeof result == 'object')
+              data = result;
+
             if(typeof settings.onPopulated === "function"){
               if(data == null){
                 if(typeof settings.onNullPopulated === "function"){
