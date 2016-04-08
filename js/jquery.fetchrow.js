@@ -1,6 +1,5 @@
 /**
  * jQuery Plugin for fetching row from database
- * @version 1.2
  * @requires jQuery 1.4 or later
  *
  * Copyright (c) 2016 Lucky
@@ -26,36 +25,48 @@
     }
 
     this.doRequest = function() {
-      $.ajax({
-        url : settings.url + keyfield.val(),
-        success : function(result){
-          try{
-            var data = null;
+      if (keyfield.val() != "") {
+        $.ajax({
+          url : settings.url + keyfield.val(),
+          beforeSend: function(){
+            if(typeof settings.onRequest === "function"){
+              settings.onRequest.call();
+            }
+          },
+          complete: function(){
+            if(typeof settings.onComplete === "function"){
+              settings.onComplete.call();
+            }
+          },
+          success : function(result){
+            try{
+              var data = null;
 
-            if (typeof result == 'string')
-              data = $.parseJSON(result);
-            else if (typeof result == 'object')
-              data = result;
+              if (typeof result == 'string')
+                data = $.parseJSON(result);
+              else if (typeof result == 'object')
+                data = result;
 
-            if(typeof settings.onPopulated === "function"){
-              if(data == null){
-                if(typeof settings.onNullPopulated === "function"){
-                  settings.onNullPopulated.call(this, element);
+              if(typeof settings.onPopulated === "function"){
+                if(data == null){
+                  if(typeof settings.onNullPopulated === "function"){
+                    settings.onNullPopulated.call(this, element);
+                  }
+                }
+                else{
+                  settings.onPopulated.call(this, data, element);
                 }
               }
-              else{
-                settings.onPopulated.call(this, data, element);
-              }
             }
-          }
-          catch(e){
+            catch(e){
+              alert('Sorry, an error has occured!');
+            }
+          },
+          error : function(xhr, status, ex){
             alert('Sorry, an error has occured!');
           }
-        },
-        error : function(xhr, status, ex){
-          alert('Sorry, an error has occured!');
-        }
-      });
+        });
+      }
     }
 
     var arr = settings.trigger.split("|");
@@ -103,11 +114,13 @@
 
   $.fn.fetchrow = function(options) {
     var settings = {
+      onRequest : null,
+      onComplete : null,
       onPopulated : null,
       onNullPopulated : null,
       trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
                                // Click event require you to specify the keyfield element.
-      keyfield : $(this)
+      keyfield : $(this),
     };
     $.extend(settings, options);
 
