@@ -120,6 +120,37 @@
     });
     </script>
   </form>
+  <br/>
+  <form action="" method="post">
+    <p>Using <b>onStart</b> to display loading indicator.</p>
+    <table>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="item_id5" id="item_id5" /> <img src="images/loader.gif" id="loading5" style="display: none" /></td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="item_name5" id="item_name5" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="item_qty5" id="item_qty5" /></td></tr>
+    </table>
+    <br/>
+    <input type="submit" name="submit5" id="submit5" />
+    <script language="javascript" type="text/javascript">
+    $("#item_id5").fetchrow({
+      url : "data.php?id=",
+      trigger : "blur",
+      onRequest: function() {
+        $("#loading5").show();
+      },
+      onComplete: function() {
+        $("#loading5").hide();
+      },
+      onPopulated : function(data, textfield){
+        $("#item_name5").val(data.name);
+        $("#item_qty5").val(data.qty);
+      },
+      onNullPopulated : function(textfield){
+        $("#item_name5").val("");
+        $("#item_qty5").val("");
+      }
+    });
+    </script>
+  </form>
   <p>&nbsp;</p>
 </body>
 </html>
