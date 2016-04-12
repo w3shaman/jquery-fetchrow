@@ -11,6 +11,7 @@
   function fetchrow(settings, element){
     var me=this;
     var keyfield = settings.keyfield;
+    var additionalQueryString = "";
 
     this.preventEnter=function(){
       element.keypress(
@@ -26,8 +27,14 @@
 
     this.doRequest = function() {
       if (keyfield.val() != "") {
+        if (typeof settings.additionalFields == "object") {
+          for (var key in settings.additionalFields) {
+            additionalQueryString = additionalQueryString + key + settings.additionalFields[key].val();
+          }
+        }
+
         $.ajax({
-          url : settings.url + keyfield.val(),
+          url : settings.url + keyfield.val() + additionalQueryString,
           beforeSend: function(){
             if(typeof settings.onRequest === "function"){
               settings.onRequest.call();
@@ -121,6 +128,7 @@
       trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
                                // Click event require you to specify the keyfield element.
       keyfield : $(this),
+      additionalFields : []
     };
     $.extend(settings, options);
 

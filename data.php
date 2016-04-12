@@ -14,6 +14,7 @@ $data = null;
 $result = mysqli_query($con, "SELECT id, name, qty FROM item WHERE id = ".intval($_GET['id']));
 if(mysqli_num_rows($result) > 0){
     $data = mysqli_fetch_assoc($result);
+    $data["request_url"] = htmlentities($_SERVER["REQUEST_URI"]);
 }
 
 mysqli_close($con);

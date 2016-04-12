@@ -151,6 +151,47 @@
     });
     </script>
   </form>
+  <br/>
+  <form action="" method="post">
+    <p>Pass additional query string using <b>additionalFields</b> parameter. We can pass more than one additional parameter in key value pair.</p>
+    <table>
+      <tr>
+        <td>Category</td>
+        <td>:</td>
+        <td>
+          <select name="category_id6" id="category_id6">
+            <option value="tools">Tools</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </td>
+      </tr>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="item_id6" id="item_id6" /></td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="item_name6" id="item_name6" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="item_qty6" id="item_qty6" /></td></tr>
+      <tr><td>Request URL</td><td>:</td><td><div id="request_url6"></div></td></tr>
+    </table>
+    <br/>
+    <input type="submit" name="submit6" id="submit6" />
+    <script language="javascript" type="text/javascript">
+    $("#item_id6").fetchrow({
+      url : "data.php?id=",
+      trigger : "blur",
+      onPopulated : function(data, textfield){
+        $("#item_name6").val(data.name);
+        $("#item_qty6").val(data.qty);
+        $("#request_url6").html(data.request_url);
+      },
+      onNullPopulated : function(textfield){
+        $("#item_name6").val("");
+        $("#item_qty6").val("");
+        $("#request_url6").html("");
+      },
+      additionalFields : {
+        "&category_id=" : $("#category_id6")
+      }
+    });
+    </script>
+  </form>
   <p>&nbsp;</p>
 </body>
 </html>
