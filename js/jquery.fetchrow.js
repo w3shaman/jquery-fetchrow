@@ -10,7 +10,7 @@
 (function($) {
   function fetchrow(settings, element){
     var me=this;
-    var keyfield = settings.keyfield;
+    var keyfield = (settings.keyfield == null) ? element : settings.keyfield;
     var additionalQueryString = "";
 
     this.preventEnter=function(){
@@ -127,7 +127,7 @@
       onNullPopulated : null,
       trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
                                // Click event require you to specify the keyfield element.
-      keyfield : $(this),
+      keyfield : null,
       additionalFields : []
     };
     $.extend(settings, options);

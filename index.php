@@ -193,5 +193,44 @@
     </script>
   </form>
   <p>&nbsp;</p>
+  <fieldset>
+    <p>More than one element with the same class name.</p>
+    <form action="" method="post">
+      <table>
+        <tr><td>ID</td><td>:</td><td><input type="text" name="id1" class="id" /></td></tr>
+        <tr><td>Item name</td><td>:</td><td><input type="text" name="name1" class="name" /></td></tr>
+        <tr><td>Qty</td><td>:</td><td><input type="text" name="qty1" class="qty" /></td></tr>
+      </table>
+      <br/>
+      <input type="submit" />
+    </form>
+    <p>&nbsp;</p>
+    <form action="" method="post">
+      <table>
+        <tr><td>ID</td><td>:</td><td><input type="text" name="id2" class="id" /></td></tr>
+        <tr><td>Item name</td><td>:</td><td><input type="text" name="name2" class="name" /></td></tr>
+        <tr><td>Qty</td><td>:</td><td><input type="text" name="qty2" class="qty" /></td></tr>
+      </table>
+      <br/>
+      <input type="submit" />
+    </form>
+  </fieldset>
+  <p>&nbsp;</p>
+  <script language="javascript" type="text/javascript">
+  $(".id").fetchrow({
+    url : "data.php?id=",
+    trigger : "blur",
+    onPopulated : function(data, textfield){
+      var index = $(".id").index(textfield);
+      $(".name").get(index).value = data.name;
+      $(".qty").get(index).value = data.qty;
+    },
+    onNullPopulated : function(textfield){
+      var index = $(".id").index(textfield);
+      $(".name").get(index).value = "";
+      $(".qty").get(index).value = "";
+    },
+  });
+  </script>
 </body>
 </html>
