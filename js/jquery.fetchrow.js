@@ -11,7 +11,7 @@
   function fetchrow(settings, element){
     var me=this;
     var keyfield = (settings.keyfield == null) ? element : settings.keyfield;
-    var additionalQueryString = "";
+    var additionalFields = "";
 
     this.preventEnter=function(){
       element.keypress(
@@ -27,14 +27,15 @@
 
     this.doRequest = function() {
       if (keyfield.val() != "") {
+        additionalFields = "";
         if (typeof settings.additionalFields == "object") {
           for (var key in settings.additionalFields) {
-            additionalQueryString = additionalQueryString + key + settings.additionalFields[key].val();
+            additionalFields = additionalFields + key + encodeURI(settings.additionalFields[key].val());
           }
         }
 
         $.ajax({
-          url : settings.url + keyfield.val() + additionalQueryString,
+          url : settings.url + encodeURI(keyfield.val()) + additionalFields,
           beforeSend: function(){
             if(typeof settings.onRequest === "function"){
               settings.onRequest.call();
