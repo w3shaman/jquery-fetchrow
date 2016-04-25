@@ -7,6 +7,7 @@
 CREATE TABLE IF NOT EXISTS `item` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
@@ -14,12 +15,13 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`id`, `name`, `qty`) VALUES
-(1, 'Chair', 10),
-(2, 'Table', 5),
-(3, 'Cupboard', 2),
-(4, 'Ladder', 1),
-(5, 'TV', 4);
+INSERT INTO `item` (`id`, `name`, `qty`, `category`) VALUES
+(1, 'Chair', 10, 'furniture'),
+(2, 'Table', 5, 'furniture'),
+(3, 'Cupboard', 2, 'furniture'),
+(4, 'Ladder', 1, 'tools'),
+(5, 'TV', 4, 'electronics'),
+(6, 'Computer', 4, 'electronics');
 
 --
 -- Indexes for dumped tables
