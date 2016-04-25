@@ -215,7 +215,6 @@
       <input type="submit" />
     </form>
   </fieldset>
-  <p>&nbsp;</p>
   <script language="javascript" type="text/javascript">
   $(".id").fetchrow({
     url : "data.php?id=",
@@ -230,6 +229,34 @@
       $(".name").get(index).value = "";
       $(".qty").get(index).value = "";
     },
+  });
+  </script>
+  <p>&nbsp;</p>
+  <p>Custom error callback.</p>
+  <form action="" method="post">
+    <table>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="id3" /></td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="name3" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="qty3" /></td></tr>
+    </table>
+    <br/>
+    <input type="submit" />
+  </form>
+  <script language="javascript" type="text/javascript">
+  $("input[name=id3]").fetchrow({
+    url : "data2.php?id=", // Wrong URL to raise the error.
+    trigger : "blur",
+    onPopulated : function(data, textfield){
+      $("input[name=name3]").val(data.name);
+      $("input[name=qty3]").val(data.qty);
+    },
+    onNullPopulated : function(textfield){
+      $("input[name=name3]").val("");
+      $("input[name=name3]").val("");
+    },
+    onError : function () { // Custom error callback.
+      alert("ERROR!");
+    }
   });
   </script>
 </body>

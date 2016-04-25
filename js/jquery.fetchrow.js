@@ -10,13 +10,13 @@
 (function($) {
   function fetchrow(settings, element){
     var me=this;
-    var keyfield = (settings.keyfield == null) ? element : settings.keyfield;
+    var keyfield = (settings.keyfield === null) ? element : settings.keyfield;
     var additionalFields = "";
 
     this.preventEnter=function(){
       element.keypress(
         function(e){
-          if(e.keyCode==13){
+          if(e.keyCode === 13){
             return false;
           }
 
@@ -26,9 +26,9 @@
     }
 
     this.doRequest = function() {
-      if (keyfield.val() != "") {
+      if (keyfield.val() !== "") {
         additionalFields = "";
-        if (typeof settings.additionalFields == "object") {
+        if (typeof settings.additionalFields === "object") {
           for (var key in settings.additionalFields) {
             additionalFields = additionalFields + key + encodeURI(settings.additionalFields[key].val());
           }
@@ -36,12 +36,12 @@
 
         $.ajax({
           url : settings.url + encodeURI(keyfield.val()) + additionalFields,
-          beforeSend: function(){
+          beforeSend : function(){
             if(typeof settings.onRequest === "function"){
               settings.onRequest.call();
             }
           },
-          complete: function(){
+          complete : function(){
             if(typeof settings.onComplete === "function"){
               settings.onComplete.call();
             }
@@ -50,9 +50,9 @@
             try{
               var data = null;
 
-              if (typeof result == 'string')
+              if (typeof result === 'string')
                 data = $.parseJSON(result);
-              else if (typeof result == 'object')
+              else if (typeof result === 'object')
                 data = result;
 
               if(typeof settings.onPopulated === "function"){
@@ -67,11 +67,15 @@
               }
             }
             catch(e){
-              alert('Sorry, an error has occured!');
+              if(typeof settings.onError === "function"){
+                settings.onError.call();
+              }
             }
           },
           error : function(xhr, status, ex){
-            alert('Sorry, an error has occured!');
+            if(typeof settings.onError === "function"){
+              settings.onError.call();
+            }
           }
         });
       }
@@ -82,7 +86,7 @@
       case "keypress" :
         element.keyup(
           function(e){
-            if(e.keyCode == arr[1]){
+            if(e.keyCode === parseInt(arr[1])){
               me.doRequest();
             }
           }
@@ -126,6 +130,9 @@
       onComplete : null,
       onPopulated : null,
       onNullPopulated : null,
+      onError : function () {
+        alert("Sorry, an error has occured!");
+      },
       trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
                                // Click event require you to specify the keyfield element.
       keyfield : null,
