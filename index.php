@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>JQuery FetchRow Demo</h1>
-  <p><i>All sample usage code can be seen when you view this file source.</i></p>
+  <p><i>All sample usage code can be seen when you view the source of this file.</i></p>
   <br/>
   <form action="" method="post">
     <p>Fetch row when <b>Enter</b> is pressed.</p>
@@ -26,9 +26,10 @@
         $("#item_qty").val(data.qty);
       },
       onNullPopulated : function(textfield){
-        alert('Item not found!');
         $("#item_name").val("");
         $("#item_qty").val("");
+        alert('Item not found!');
+        $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
       }
     });
     </script>
@@ -52,9 +53,10 @@
         $("#item_qty2").val(data.qty);
       },
       onNullPopulated : function(textfield){
-        alert('Item not found!');
         $("#item_name2").val("");
         $("#item_qty2").val("");
+        alert('Item not found!');
+        $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
       }
     });
     </script>
@@ -187,6 +189,7 @@
         $("#item_qty6").val("");
         $("#request_url6").val("");
         alert("Please choose a correct category!");
+        $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
       },
       additionalFields : {
         "&category=" : $("#category6")
@@ -218,6 +221,7 @@
     },
     onError : function () { // Custom error callback.
       alert("ERROR: Sorry there is an unexpected error, please try again later.");
+      $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
     }
   });
   </script>
