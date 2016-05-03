@@ -55,7 +55,12 @@
       onNullPopulated : function(textfield){
         $("#item_name2").val("");
         $("#item_qty2").val("");
-        alert('Item not found!');
+
+        // Only show alert if the ID field is not empty.
+        if (textfield.val() !== "") {
+          alert('Item not found!');
+        }
+
         $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
       }
     });
@@ -169,7 +174,7 @@
           </select>
         </td>
       </tr>
-      <tr><td>ID</td><td>:</td><td><input type="text" name="item_id6" id="item_id6" /> * Type item ID and press Enter. Make sure you have chosen the correct category before.</td></tr>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="item_id6" id="item_id6" /> * Type item ID and press Enter. Make sure you have chosen the correct category.</td></tr>
       <tr><td>Item name</td><td>:</td><td><input type="text" name="item_name6" id="item_name6" /></td></tr>
       <tr><td>Qty</td><td>:</td><td><input type="text" name="item_qty6" id="item_qty6" /></td></tr>
       <tr><td>Request Parameter</td><td>:</td><td id="request_url6" style="font-weight:bold"></td></tr>

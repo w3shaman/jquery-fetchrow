@@ -79,6 +79,9 @@
           }
         });
       }
+      else {
+        settings.onNullPopulated.call(this, element);
+      }
     }
 
     var arr = settings.trigger.split("|");
