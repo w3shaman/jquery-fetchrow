@@ -1,5 +1,6 @@
 /**
  * jQuery Plugin for fetching row from database
+ * @version 1.3
  * @requires jQuery 1.4 or later
  *
  * Copyright (c) 2016 Lucky
@@ -84,46 +85,49 @@
       }
     }
 
-    var arr = settings.trigger.split("|");
-    switch(arr[0]) {
-      case "keypress" :
-        element.keyup(
-          function(e){
-            if(e.keyCode === parseInt(arr[1])){
+    var events = settings.trigger.split(",");
+    for (var i = 0; i < events.length; i++) {
+      var arr = events[i].split("|");
+      switch(arr[0]) {
+        case "keypress" :
+          element.keyup(
+            function(e){
+              if(e.keyCode === parseInt(arr[1])){
+                me.doRequest();
+              }
+            }
+          );
+
+          element.attr("autocomplete", "off");
+
+          this.preventEnter();
+
+          break;
+        case "blur":
+          element.blur(
+            function(e){
               me.doRequest();
             }
-          }
-        );
+          );
 
-        element.attr("autocomplete", "off");
+          break;
+        case "change":
+          element.change(
+            function(e){
+              me.doRequest();
+            }
+          );
 
-        this.preventEnter();
+          break;
+        case "click":
+          element.click(
+            function(e){
+              me.doRequest();
+            }
+          );
 
-        break;
-      case "blur":
-        element.blur(
-          function(e){
-            me.doRequest();
-          }
-        );
-
-        break;
-      case "change":
-        element.change(
-          function(e){
-            me.doRequest();
-          }
-        );
-
-        break;
-      case "click":
-        element.click(
-          function(e){
-            me.doRequest();
-          }
-        );
-
-        break;
+          break;
+      }
     }
   }
 
