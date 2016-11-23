@@ -206,28 +206,54 @@
   <p>Custom error message using callback function (we intentionally point to wrong URL to raise error).</p>
   <form action="" method="post">
     <table>
-      <tr><td>ID</td><td>:</td><td><input type="text" name="id3" /> * Type item ID and press Enter.</td></tr>
-      <tr><td>Item name</td><td>:</td><td><input type="text" name="name3" /></td></tr>
-      <tr><td>Qty</td><td>:</td><td><input type="text" name="qty3" /></td></tr>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="id7" /> * Type item ID and press Enter.</td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="name7" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="qty7" /></td></tr>
     </table>
     <br/>
     <input type="submit" />
   </form>
   <script language="javascript" type="text/javascript">
-  $("input[name=id3]").fetchrow({
+  $("input[name=id7]").fetchrow({
     url : "data2.php?id=", // Wrong URL to raise the error.
     onPopulated : function(data, textfield){
-      $("input[name=name3]").val(data.name);
-      $("input[name=qty3]").val(data.qty);
+      $("input[name=name7]").val(data.name);
+      $("input[name=qty7]").val(data.qty);
     },
     onNullPopulated : function(textfield){
-      $("input[name=name3]").val("");
-      $("input[name=name3]").val("");
+      $("input[name=name7]").val("");
+      $("input[name=name7]").val("");
     },
     onError : function () { // Custom error callback.
       alert("ERROR: Sorry there is an unexpected error, please try again later.");
       $(':focus').blur(); // Unfocus on the element so we wont get alert message repeatedly when pressing Enter to close it.
     }
+  });
+  </script>
+  <p>&nbsp;</p>
+  <p>Use multiple events as trigger. Fetch row action will be executed on <b>button click</b> or when <b>enter</b> key is pressed. Use comma (,) to separate each event.</p>
+  <form action="" method="post">
+    <table>
+      <tr><td>ID</td><td>:</td><td><input type="text" name="id8" /> <input type="button" value="Search" id="button8" /></td></tr>
+      <tr><td>Item name</td><td>:</td><td><input type="text" name="name8" /></td></tr>
+      <tr><td>Qty</td><td>:</td><td><input type="text" name="qty8" /></td></tr>
+    </table>
+    <br/>
+    <input type="submit" />
+  </form>
+  <script language="javascript" type="text/javascript">
+  $("input[name=id8]").fetchrow({
+    url : "data.php?id=", // Wrong URL to raise the error.
+    trigger : "click,keypress|13",
+    onPopulated : function(data, textfield){
+      $("input[name=name8]").val(data.name);
+      $("input[name=qty8]").val(data.qty);
+    },
+    onNullPopulated : function(textfield){
+      $("input[name=name8]").val("");
+      $("input[name=name8]").val("");
+    },
+    button : $("#button8") // The button as the source of click event.
   });
   </script>
 </body>

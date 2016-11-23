@@ -1,6 +1,5 @@
 /**
  * jQuery Plugin for fetching row from database
- * @version 1.3
  * @requires jQuery 1.4 or later
  *
  * Copyright (c) 2016 Lucky
@@ -12,6 +11,7 @@
   function fetchrow(settings, element){
     var me=this;
     var keyfield = (settings.keyfield === null) ? element : settings.keyfield;
+    var button = (settings.button === null) ? element : settings.button;
     var additionalFields = "";
 
     this.preventEnter=function(){
@@ -85,12 +85,20 @@
       }
     }
 
+    var elm = element;
     var events = settings.trigger.split(",");
     for (var i = 0; i < events.length; i++) {
       var arr = events[i].split("|");
+      if ($.inArray(arr[0], ["keypress", "blur", "change"]) > -1) {
+        elm = keyfield;
+      }
+      else {
+        elm = button;
+      }
+
       switch(arr[0]) {
         case "keypress" :
-          element.keyup(
+          elm.keyup(
             function(e){
               if(e.keyCode === parseInt(arr[1])){
                 me.doRequest();
@@ -98,13 +106,13 @@
             }
           );
 
-          element.attr("autocomplete", "off");
+          elm.attr("autocomplete", "off");
 
           this.preventEnter();
 
           break;
         case "blur":
-          element.blur(
+          elm.blur(
             function(e){
               me.doRequest();
             }
@@ -112,7 +120,7 @@
 
           break;
         case "change":
-          element.change(
+          elm.change(
             function(e){
               me.doRequest();
             }
@@ -120,7 +128,7 @@
 
           break;
         case "click":
-          element.click(
+          elm.click(
             function(e){
               me.doRequest();
             }
@@ -141,8 +149,9 @@
         alert("Sorry, an error has occured!");
       },
       trigger : 'keypress|13', // Supported events are: keypress|<keycode>, change, blur, click.
-                               // Click event require you to specify the keyfield element.
+                               // Click event require you to specify the keyfield or button element.
       keyfield : null,
+      button : null,
       additionalFields : []
     };
     $.extend(settings, options);
