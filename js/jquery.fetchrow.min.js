@@ -1,5 +1,6 @@
 /**
  * jQuery Plugin for fetching row from database
+ * @version 1.4
  * @requires jQuery 1.4 or later
  *
  * Copyright (c) 2016 Lucky
