@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>JQuery FetchRow Demo</h1>
-  <p><i>All sample usage code can be seen when you view the source of this file.</i></p>
+  <p><span style="background-color:#ff5"><i>All the sample code can be seen when you <b>view the source</b> of this file.</i></span></p>
   <br/>
   <form action="" method="post">
     <p>Fetch row when <b>Enter</b> is pressed.</p>
@@ -231,7 +231,7 @@
   });
   </script>
   <p>&nbsp;</p>
-  <p>Use multiple events as trigger. Fetch row action will be executed on <b>button click</b> or when <b>enter</b> key is pressed. Use comma (,) to separate each event.</p>
+  <p>Use multiple events as trigger. Fetch row action will be executed on <b>button click</b> or when <b>enter</b> key is pressed.</p>
   <form action="" method="post">
     <table>
       <tr><td>ID</td><td>:</td><td><input type="text" name="id8" /> <input type="button" value="Search" id="button8" /></td></tr>
@@ -244,7 +244,7 @@
   <script language="javascript" type="text/javascript">
   $("input[name=id8]").fetchrow({
     url : "data.php?id=", // Wrong URL to raise the error.
-    trigger : "click,keypress|13",
+    trigger : "click,keypress|13", // Use comma (,) to separate each event.
     onPopulated : function(data, textfield){
       $("input[name=name8]").val(data.name);
       $("input[name=qty8]").val(data.qty);
