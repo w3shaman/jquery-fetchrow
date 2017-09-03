@@ -3,7 +3,7 @@
 <head>
   <title>JQuery FetchRow</title>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="js/jquery.fetchrow.js"></script>
+  <script src="../js/jquery.fetchrow.js"></script>
 </head>
 <body>
   <h1>JQuery FetchRow Demo</h1>
