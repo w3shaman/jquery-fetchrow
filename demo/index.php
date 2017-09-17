@@ -2,12 +2,14 @@
 <html>
 <head>
   <title>JQuery FetchRow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Get one row from database using jQuery and display the fields in form elements." />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="../js/jquery.fetchrow.js"></script>
 </head>
 <body>
   <h1>JQuery FetchRow Demo</h1>
-  <p><span style="background-color:#ff5"><i>All the sample code can be seen when you <b>view the source</b> of this file.</i></span></p>
+  <p><i>All the sample code can be seen when you <b>view the source</b> of this file.</i></p>
   <br/>
   <form action="" method="post">
     <p>Fetch row when <b>Enter</b> is pressed.</p>
