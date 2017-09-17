@@ -1,0 +1,26 @@
+{
+  "name": "jquery-fetchrow",
+  "version": "1.4.1",
+  "description": "JQuery plugin for fetching one row from your database table and display the fields to any input elements.",
+  "main": "index.js",
+  "authors": [
+    "w3shaman"
+  ],
+  "license": "GPL-2.0",
+  "keywords": [
+    "jquery",
+    "fetch",
+    "table"
+  ],
+  "homepage": "http://w3shaman.com/article/jquery-fetchrow",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.4"
+  }
+}
